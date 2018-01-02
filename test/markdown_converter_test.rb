@@ -26,6 +26,6 @@ class MarkDownConverterTest < Minitest::Test
     converter = MarkDownConverter.new("This is the first line of the paragraph.
 This is the second line of the same paragraph.")
 
-    assert_equal "<p>This is the first line of a paragraph. This is the second line of the same paragraph.</p>", converter.paragraph
+    assert_equal "<p>This is the first line of the paragraph. This is the second line of the same paragraph.</p>", converter.paragraph
   end
 end

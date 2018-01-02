@@ -8,7 +8,6 @@ attr_reader :markdown_text
 
   def paragraph
     @markdown_text = "<p>#{markdown_text}</p>"
-      if markdown_text.end_with?("\n")
-        
+      markdown_text.gsub("\n", " ")
   end
 end
