@@ -1,5 +1,8 @@
+require './lib/html_dictionary'
 require 'pry'
+
 class MarkDownConverter
+  include HtmlDictionary
 
 attr_reader :markdown_text
 
@@ -8,36 +11,23 @@ attr_reader :markdown_text
   end
 
   def paragraphs
-      @markdown_text = "<p>#{markdown_text}</p>"
-      if @markdown_text.include?("\n\n")
-        @markdown_text.gsub("\n\n", "</p>\n<p>")
-      elsif @markdown_text.include?("\n")
-        @markdown_text.gsub("\n", " ")
+    @markdown_text = "<p>#{markdown_text}</p>"
+      if markdown_text.include?("\n\n")
+        markdown_text.gsub("\n\n", "</p>\n<p>")
+      elsif markdown_text.include?("\n")
+        markdown_text.gsub("\n", " ")
       else
-        @markdown_text
+        markdown_text
       end
   end
 
-  def headers
-    if @markdown_text.start_with?("# ")
-      @markdown_text.slice!("# ")
-      @markdown_text = "<h1>#{markdown_text}</h1>"
-    elsif @markdown_text.start_with?("## ")
-      @markdown_text.slice!("## ")
-      @markdown_text = "<h2>#{markdown_text}</h2>"
-    elsif markdown_text.start_with?("### ")
-      @markdown_text.slice!("### ")
-      @markdown_text = "<h3>#{markdown_text}</h3>"
-    elsif markdown_text.start_with?("#### ")
-      @markdown_text.slice!("#### ")
-      @markdown_text = "<h4>#{markdown_text}</h4>"
-    elsif markdown_text.start_with?("##### ")
-      @markdown_text.slice!("###### ")
-      @markdown_text = "<h5>#{markdown_text}</h5>"
-    elsif markdown_text.start_with?("###### ")
-      @markdown_text.slice!("###### ")
-      @markdown_text = "<h6>#{markdown_text}</h6>"
 
+  def headers
+    if @markdown_text.start_with?("#")
+      header_symbol = @markdown_text.split[0]
+      header_text = @markdown_text.split.drop(1).join(" ")
+      header_lookup = HEADER_TAGS.fetch(header_symbol)
+      converted_text = header_lookup.sub(" ", "#{header_text}")
     end
   end
 end

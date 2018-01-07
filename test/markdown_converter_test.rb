@@ -40,4 +40,11 @@ class MarkDownConverterTest < Minitest::Test
 
     assert_equal "<h2>Here's an H2</h2>", converter.headers
   end
+
+  def test_it_handles_em_tags
+    skip
+    converter = MarkDownConverter.new("This is *emphasis*")
+
+    assert_equal "This is <em>emphasis</em>", converter.em
+  end
 end
