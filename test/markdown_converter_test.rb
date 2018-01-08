@@ -46,4 +46,10 @@ class MarkDownConverterTest < Minitest::Test
 
     assert_equal "This is <em>emphasis</em>", converter.emphasis
   end
+
+  def test_it_handles_strong_emph
+    converter = MarkDownConverter.new("This is **strong**")
+
+    assert_equal "This is <st>strong</st>", converter.strong
+  end
 end

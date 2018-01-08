@@ -50,4 +50,24 @@ attr_reader :markdown_text
       end
     text.join(" ")
   end
+
+  def strong
+    text = []
+     markdown_text.split.each do |word|
+        if word.start_with?("**") && word.end_with?("**") == true
+          swap_front_symbol = word.sub("**", "<st>")
+          swap_back_symbol = swap_front_symbol.sub("**", "</st>")
+          text << swap_back_symbol
+        elsif word.start_with?("**")
+          swap_front_symbol = word.sub("*", "<st>")
+          text << swap_front_symbol
+        elsif word.end_with?("*")
+          swap_back_symbol = word.sub("**", "</st>")
+          text << swap_back_symbol
+        else
+          text << word
+        end
+      end
+    text.join(" ")
+  end
 end
