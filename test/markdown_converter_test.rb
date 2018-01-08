@@ -52,4 +52,10 @@ class MarkDownConverterTest < Minitest::Test
 
     assert_equal "This is <st>strong</st>", converter.strong
   end
+
+  def test_it_can_take_both_st_and_em
+    converter = MarkDownConverter.new("My *emphasized and **stronged** text* is awesome.")
+
+    assert_equal "My <em>emphasized and <st>stronged</st> text</em> is awesome.", converter.strong
+  end
 end
