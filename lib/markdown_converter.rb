@@ -23,11 +23,31 @@ attr_reader :markdown_text
 
 
   def headers
-    if @markdown_text.start_with?("#")
-      header_symbol = @markdown_text.split[0]
-      header_text = @markdown_text.split.drop(1).join(" ")
+    if markdown_text.start_with?("#")
+      header_symbol = markdown_text.split[0]
+      header_text = markdown_text.split.drop(1).join(" ")
       header_lookup = HEADER_TAGS.fetch(header_symbol)
       converted_text = header_lookup.sub(" ", "#{header_text}")
     end
+  end
+
+  def emphasis
+    text = []
+     markdown_text.split.each do |word|
+        if word.start_with?("*") && word.end_with?("*") == true
+          swap_front_symbol = word.sub("*", "<em>")
+          swap_back_symbol = swap_front_symbol.sub("*", "</em>")
+          text << swap_back_symbol
+        elsif word.start_with?("*")
+          swap_front_symbol = word.sub("*", "<em>")
+          text << swap_front_symbol
+        elsif word.end_with?("*")
+          swap_back_symbol = word.sub("*", "</em>")
+          text << swap_back_symbol
+        else
+          text << word
+        end
+      end
+    text.join(" ")
   end
 end
