@@ -53,9 +53,15 @@ class MarkDownConverterTest < Minitest::Test
     assert_equal "This is <st>strong</st>", converter.strong
   end
 
-  def test_it_can_take_both_st_and_em
+  def test_it_can_take_both_strong_and_emph_tags
     converter = MarkDownConverter.new("My *emphasized and **stronged** text* is awesome.")
 
     assert_equal "My <em>emphasized and <st>stronged</st> text</em> is awesome.", converter.strong
+  end
+
+  def test_it_handles_unsorted_lists
+    converter = MarkDownConverter.new("* Sushi\n* Barbeque\n* Mexican")
+
+    assert_equal "<ul>\n<li>Sushi</li>\n<li>Barbeque</li>\n<li>Mexican</li>\n</ul>", converter.un_lists
   end
 end

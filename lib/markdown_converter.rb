@@ -11,7 +11,7 @@ attr_reader :markdown_text
   end
 
   def paragraphs
-    unless markdown_text.start_with?("#")
+    unless markdown_text.start_with?("#", "*")
       @markdown_text = "<p>#{markdown_text}</p>"
         if markdown_text.include?("\n\n")
           markdown_text.gsub("\n\n", "</p>\n<p>")
@@ -75,4 +75,20 @@ attr_reader :markdown_text
     text.join(" ")
   end
 
+    def un_lists
+      if markdown_text.start_with?("* ")
+        text = []
+        final_text = []
+        list_symbol = markdown_text.split[0]
+        list_text = markdown_text.split.drop(1).join(" ")
+        break_items = list_text.gsub("*", "").split
+        text = break_items
+        text.map do |word|
+          list_lookup = LIST_TAGS.fetch(list_symbol)
+          converted_text = list_lookup.sub(" ", "#{word}")
+          final_text  << converted_text
+        end
+        output = "<ul>\n#{final_text.join}</ul>"
+      end
+    end
 end
